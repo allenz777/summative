@@ -10,10 +10,13 @@ import processing.core.PApplet;
  * @author 342348646
  */
 public class MySketch extends PApplet {
-    private Car car1;
-    private Car car2;
+    private Mulan mulan;
+    String userInput = "";
     private boolean showInfo = false;
     private boolean showInfo2 = false;
+    int stage = 0;
+    static final int speed = 1;
+    int health = 100;
  
   public void settings() {
     size(400, 400);
@@ -21,52 +24,56 @@ public class MySketch extends PApplet {
 
   public void setup() {
     background(255);
-    car1 = new Car(this, 0, 200, 10, "images/car.png");
-    car2 = new Car(this, 50, 250, 1, "images/car.png");
+    textSize(20);
+    mulan = new Mulan(this, 20, 30, speed, "images/person.png");
   }
   
   public void draw() {
     background(255);
-    car1.draw();
-    car2.draw();
-    drawCollisions();
+        
+    if (stage == 0){
+        fill(0);
+        if (stage == 0){
+            fill(0);
+            text("Press Enter to continue", 20, 50);
+            text(userInput, 20, 100);
+        } else if (stage == 1){
+            mulan.draw();
+        }
+    }
     
     if (keyPressed){
         if (keyCode == LEFT){
-            car1.move(-5, 0);
+            mulan.move(-speed, 0);
         } else if (keyCode == RIGHT){
-            car1.move(5, 0);
+            mulan.move(speed, 0);
         } else if (keyCode == UP){
-            car1.move(0,-5);
+            mulan.move(0,-speed);
         } else if (keyCode == DOWN){
-            car1.move(0,5);
+            mulan.move(0,speed);
         }
     }
     if (showInfo){
-        car2.displayInfo(this);
-    }
-    if (showInfo2){
-        car1.displayInfo(this);
+        mulan.displayInfo(this);
     }
   }
   
+    public void keyPressed(){
+        if (stage == 0){
+            if (keyCode == ENTER){
+                stage = 1;
+                mulan = new Mulan(this, 20, 30, speed, "images/person.png");
+            } else if (key != CODED){
+                userInput += key;
+            }
+        }
+    }
+    
   public void mousePressed(){
-      if (car2.isClicked(mouseX,mouseY)){
+      if (mulan.isClicked(mouseX,mouseY)){
           showInfo = !showInfo;
       } else {
           showInfo = false;
-      }
-      if (car1.isClicked(mouseX, mouseY)){
-          showInfo2 = !showInfo2;
-      } else {
-          showInfo2 = false;
-      }
-  }
-  
-  public void drawCollisions(){
-      if(car1.isCollidingWith(car2)){
-          fill(255,0,0);
-          this.text("oouch",car2.x, car2.y);
       }
   }
 }

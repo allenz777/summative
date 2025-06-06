@@ -16,7 +16,8 @@ public class Car {
     private int speed;
     private PApplet app;
     private PImage image;
-    private int width, height;
+    int width;
+    int height;
     
     public Car(PApplet p, int x, int y, int speed, String imagePath){
         this.app = p;

@@ -17,6 +17,7 @@ public class Mulan {
     private PApplet app;
     private PImage image;
     private int width, height;
+    private String health;
     
     public Mulan(PApplet p, int x, int y, int speed, String imagePath){
         this.app = p;
@@ -28,7 +29,7 @@ public class Mulan {
         this.height = image.height;
     }
     
-    public boolean isCollidingWith(Car other){
+    public boolean isCollidingWith(Mulan other){
         boolean isLeftOfOtherRight = x < other.x + other.width;
         boolean isRightOfOtherLeft = x + width > other.x;
         boolean isAboveOtherBottom = y < other.y + other.height;
@@ -44,13 +45,13 @@ public class Mulan {
     }
     public void displayInfo(PApplet p){
         app.fill(0);
-        app.text("X: " + x + " Y: " + y + " Speed: " + speed, x, y-50);
+        app.text("Health: " + health, x, y-50);
     }
     public void move(int dx, int dy){
         x+=dx;
         y+=dy;
     }
-    public void draw(){
+    public void draw(){ 
         app.image(image, x, y);
     }
 }
